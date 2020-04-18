@@ -32,8 +32,6 @@ class Solution(object):
         
         start_num, start_denum = 0, 1
         end_num, end_denum = 1, 1
-        print self.calVal(A, 3,8)
-        print self.compare(2, 5, 3, 8)
         while(self.compare(end_num, end_denum, start_num, start_denum)):
             #计算中间分数
             middle_num = start_num*end_denum+end_num*start_denum 
