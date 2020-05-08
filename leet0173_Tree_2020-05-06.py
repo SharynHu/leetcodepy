@@ -15,6 +15,7 @@ class BSTIterator(object):
         self.stack = []
         if root:
             self.stack.append(root)
+        #将左子树全部入栈，确保栈顶元素是最小的元素
         while(self.stack and self.stack[-1].left):
             self.stack.append(self.stack[-1].left)
 
@@ -23,15 +24,16 @@ class BSTIterator(object):
         @return the next smallest number
         :rtype: int
         """
-        #要想访问栈顶元素，必须保证当前栈顶元素的左子树已经全部被访问完毕
+        #现在栈顶元素是最小的元素，也就是说它的左子树已经全部访问完了
+        #访问栈顶元素
         currNode = self.stack.pop()
-        x = currNode.val
-        if not currNode.right:
-            return x
-        self.stack.append(currNode.right)
-        while(self.stack[-1].left):
-            self.stack.append(self.stack[-1].left)
-        return x
+        currVal  = currNode.val
+        #如果栈顶元素有右子树，应该将其右子树及其右子树的左子树入栈
+        if currNode.right:
+            self.stack.append(currNode.right)
+            while(self.stack and self.stack[-1].left):
+                self.stack.append(self.stack[-1].left)
+        return currVal
 
     def hasNext(self):
         """
@@ -41,9 +43,3 @@ class BSTIterator(object):
         if not self.stack:
             return False
         return True
-
-
-# Your BSTIterator object will be instantiated and called as such:
-# obj = BSTIterator(root)
-# param_1 = obj.next()
-# param_2 = obj.hasNext()
